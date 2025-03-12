@@ -49,8 +49,20 @@ public:
     T findMax() {
         return data[size - 1];
         }
-    double findMean();
-    T findSummation();
+    double findMean() {
+        double sum = 0;
+        for (int i = 0; i < size; i++) {
+            sum += data[i];
+        }
+        return sum / size;
+    }
+    T findSummation() {
+        T sum = 0;
+        for (int i = 0; i < size; i++) {
+            sum += data[i];
+        }
+        return sum;
+    }
 
     // Utility Functions
     void displayArray() {
@@ -60,10 +72,54 @@ public:
     }  // Display sorted array
     void inputData() {
         for (int i = 0; i < size; i++) {
+            cout << "Enter element " << i+1<<": ";
             cin >> data[i];
         }
         sort();
     }     // Take input dynamically
-    void statisticsMenu(); // Menu for statistical operations
+    void statisticsMenu() {
+        int choice;
+       do {
+           cout << endl;
+           cout << "1. Median" << endl;
+           cout << "2. Minimum" << endl;
+           cout << "3. Maximum" << endl;
+           cout << "4. Mean" << endl;
+           cout << "5. Summation" << endl;
+           cout << "6. Exit" << endl;
+           cout << "Enter your choice: ";
+           cin >> choice;
+           switch (choice) {
+               case 1:
+                   cout << "Median: " << findMedian()<<endl;
+                    break;
+               case 2:
+                   cout << "Minimum: " << findMin()<<endl;
+                   break;
+               case 3:
+                   cout << "Maximum: " << findMax()<<endl;
+                    break;
+               case 4:
+                   cout << "Mean: " << findMean()<<endl;
+                    break;
+               case 5:
+                   cout << "Summation: " << findSummation()<<endl;
+                    break;
+               case 6:
+                   cout << "Exit...." << endl;
+                    break;
+           }
+       }while (choice != 6);
+
+    }
 };
+int main() {
+    int size;
+    cout<<"Enter the number of elements:";
+    cin>>size;
+    StatisticalCalculation<int> statistics(size);
+    statistics.inputData();
+    statistics.statisticsMenu();
+    return 0;
+}
 
