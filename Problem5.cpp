@@ -71,15 +71,22 @@ public:
         }
     }  // Display sorted array
     void inputData() {
+        int temp;
         for (int i = 0; i < size; i++) {
             cout << "Enter element " << i+1<<": ";
-            cin >> data[i];
+            cin >> temp;
+            while (!(cin >> temp)) {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Not a number. Enter element " << i + 1 << ": ";
+            }
+            data[i] = temp;
         }
         sort();
     }     // Take input dynamically
     void statisticsMenu() {
-        int choice;
-       do {
+        string choice;
+       while (true) {
            cout << endl;
            cout << "1. Median" << endl;
            cout << "2. Minimum" << endl;
@@ -87,29 +94,33 @@ public:
            cout << "4. Mean" << endl;
            cout << "5. Summation" << endl;
            cout << "6. Exit" << endl;
-           cout << "Enter your choice: ";
+           cout<< "Enter your choice (1-5): ";
            cin >> choice;
-           switch (choice) {
-               case 1:
-                   cout << "Median: " << findMedian()<<endl;
-                    break;
-               case 2:
-                   cout << "Minimum: " << findMin()<<endl;
-                   break;
-               case 3:
-                   cout << "Maximum: " << findMax()<<endl;
-                    break;
-               case 4:
-                   cout << "Mean: " << findMean()<<endl;
-                    break;
-               case 5:
-                   cout << "Summation: " << findSummation()<<endl;
-                    break;
-               case 6:
-                   cout << "Exit...." << endl;
-                    break;
+           if (choice == "1") {
+
+               cout << "Median: " << findMedian()<<endl;
            }
-       }while (choice != 6);
+           else if (choice == "2") {
+               cout << "Minimum: " << findMin()<<endl;
+           }
+           else if (choice == "3") {
+               cout << "Maximum: " << findMax()<<endl;
+           }
+           else if (choice == "4") {
+               cout << "Mean: " << findMean()<<endl;
+           }
+           else if (choice == "5") {
+               cout << "Summation: " << findSummation()<<endl;
+           }
+           else if (choice == "6") {
+               cout << "Exit..." << endl;
+               exit(0);
+           }
+           else {
+               cout << "Wrong choice! Invalid Input" << endl;
+           }
+
+       }
 
     }
 };
