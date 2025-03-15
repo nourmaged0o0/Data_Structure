@@ -104,8 +104,55 @@ public:
 
 
     } // (7) Count Sort (Only for int)
-    void radixSort(); // (8) Radix Sort (Only for int)
-    void bucketSort(); // (9) Bucket Sort
+    void radixSort() {
+        int maxVal = data[0];
+        for (int i = 1; i < size; i++)
+            if (data[i] > maxVal) maxVal = data[i];
+
+        for (int place = 1; maxVal / place > 0; place *= 10)
+            countSort(place);
+    } // (8) Radix Sort (Only for int)
+    void bucketSort() {
+        if (size <= 0) return;
+
+        int bucketCount = size;
+        T maxVal = data[0], minVal = data[0];
+
+        for (int i = 1; i < size; i++) {
+            if (data[i] > maxVal) maxVal = data[i];
+            if (data[i] < minVal) minVal = data[i];
+        }
+
+        T range = maxVal - minVal + 1;
+
+        T** buckets = new T*[bucketCount];
+        int* bucketSizes = new int[bucketCount]();
+
+        for (int i = 0; i < bucketCount; i++) {
+            buckets[i] = new T[size];
+        }
+
+        for (int i = 0; i < size; i++) {
+            int index = (bucketCount * (data[i] - minVal)) / range;
+            if (index >= bucketCount) index = bucketCount - 1;
+            buckets[index][bucketSizes[index]++] = data[i];
+        }
+
+        for (int i = 0; i < bucketCount; i++) {
+            sort(buckets[i], buckets[i] + bucketSizes[i]);
+        }
+
+        int index = 0;
+        for (int i = 0; i < bucketCount; i++) {
+            for (int j = 0; j < bucketSizes[i]; j++) {
+                data[index++] = buckets[i][j];
+            }
+            delete[] buckets[i];
+        }
+
+        delete[] buckets;
+        delete[] bucketSizes;
+    } // (9) Bucket Sort
 
     void merge(int left, int mid, int right) {
         int n1 = mid - left + 1;
@@ -173,6 +220,7 @@ public:
     } // Measure sorting time
 
     void showMenu() {
+
         while (true){
 
 
@@ -272,4 +320,3 @@ return 0;
 
 // there is an error i cant fix it idk why
 // make the validation part of integer
-// implement the two sorting algo
