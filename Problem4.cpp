@@ -1,10 +1,9 @@
 #include <iostream>
-#include <vector>
-#include <string>
 #include <chrono>
 using namespace std;
 
 template<typename T>
+
 class SortingSystem {
 private:
     T *data;
@@ -27,15 +26,17 @@ public:
             while (j >= 0 && temp < data[j]) {
                 data[j + 1] = data[j];
                 j = j - 1;
+
             }
             data[j + 1] = temp;
+
+            cout << "Iteration " << (i) << ": ";
+            displayData();
         }
     }
 
     void selectionSort() {
-        cout << "Sorting using Selection Sort..." << endl;
-        cout << "Initial Data: ";
-        displayData();
+
 
         for (int i = 0; i < size - 1; i++) {
             int minIndx = i;
@@ -53,16 +54,21 @@ public:
     }
 
     void bubbleSort() {
+
+        displayData();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size - i - 1; j++) {
                 if (data[j] > data[j + 1]) {
                     swap(data[j], data[j + 1]);
                 }
             }
+            cout << "Iteration " << (i + 1) << ": ";
+            displayData();
         }
     }
 
     void shellSort() {
+
         for (int interval = size / 2; interval > 0; interval /= 2) {
             for (int i = interval; i < size; i++) {
                 T temp = data[i];
@@ -71,6 +77,8 @@ public:
                     data[j] = data[j - interval];
                 }
                 data[j] = temp;
+                cout << "Iteration " << (i) << ": ";
+                displayData();
             }
         }
     }
@@ -93,6 +101,7 @@ public:
     }
 
     void mergeSort(int left, int right) {
+
         if (left < right) {
             int mid = left + (right - left) / 2;
             mergeSort(left, mid);
@@ -102,6 +111,7 @@ public:
     }
 
     int partition(int low, int high) {
+
         T pivot = data[high];
         int i = low - 1;
         for (int j = low; j < high; j++) {
@@ -115,6 +125,7 @@ public:
     }
 
     void quickSort(int low, int high) {
+
         if (low < high) {
             int pi = partition(low, high);
             quickSort(low, pi - 1);
@@ -123,6 +134,7 @@ public:
     }
 
     void countSort() {
+
         // Find the maximum element
         T maxVal = data[0];
         for (int i = 1; i < size; i++) {
@@ -140,6 +152,7 @@ public:
         // Store count of each element
         for (int i = 0; i < size; i++) {
             count[data[i]]++;
+
         }
 
         // Update the array
@@ -155,6 +168,7 @@ public:
     }
 
     void radixSort() {
+
         // Find the maximum number to know number of digits
         T max = data[0];
         for (int i = 1; i < size; i++) {
@@ -196,6 +210,7 @@ public:
     }
 
     void bucketSort() {
+
         // Find the maximum and minimum values
         T max_val = data[0];
         T min_val = data[0];
@@ -250,7 +265,6 @@ public:
         delete[] bucket_sizes;
     }
 
-    // Print the current state of the array
     void displayData() {
         cout << "[";
         for (int i = 0; i < size; i++) {
@@ -260,7 +274,7 @@ public:
         cout << "]" << endl;
     }
 
-    // Measure sorting time for any sorting algorithm
+
     double measureSortTime(void (SortingSystem<T>::*sortFunc)()) {
         auto start = chrono::high_resolution_clock::now();
         (this->*sortFunc)();
@@ -286,6 +300,12 @@ public:
         char continueOption = 'y';
 
         while (continueOption == 'y' || continueOption == 'Y') {
+            cout << "Enter " << size << " elements:" << endl;
+            for (int i = 0; i < size; i++) {
+                cout << "Enter data " << (i + 1) << ": ";
+                cin >> data[i];
+            }
+
             cout << "Select a sorting algorithm:\n";
             cout << "1. Insertion Sort\n2. Selection Sort\n3. Bubble Sort\n4. Shell Sort\n5. Merge Sort\n6. Quick Sort\n7. Count Sort (Only for integers)\n8. Radix Sort (Only for integers)\n9. Bucket Sort\nEnter your choice (1-9): ";
             int choice;
@@ -295,41 +315,64 @@ public:
                 continue;
             }
 
-            // Get data from user
-            cout << "Enter " << size << " elements:" << endl;
-            for (int i = 0; i < size; i++) {
-                cout << "Enter data " << (i + 1) << ": ";
-                cin >> data[i];
-            }
+
+
 
             double sortTime = 0.0;
 
             switch (choice) {
                 case 1:
+                    cout << "Sorting using Insertion Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::insertionSort);
                     break;
                 case 2:
+                    cout << "Sorting using Selection Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::selectionSort);
                     break;
                 case 3:
+                    cout << "Sorting using Bubble Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::bubbleSort);
                     break;
                 case 4:
+                    cout<<"Sorting using Shell Sort..."<<endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::shellSort);
                     break;
                 case 5:
+                    cout << "Sorting using Merge Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::mergeSort, 0, size - 1);
                     break;
                 case 6:
+                    cout << "Sorting using Quick Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::quickSort, 0, size - 1);
                     break;
                 case 7:
+                    cout << "Sorting using Count Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::countSort);
                     break;
                 case 8:
+                    cout << "Sorting using Radix Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::radixSort);
                     break;
                 case 9:
+                    cout << "Sorting using Bucket Sort..." << endl;
+                    cout << "Initial Data: ";
+                    displayData();
                     sortTime = measureSortTime(&SortingSystem<T>::bucketSort);
                     break;
             }
@@ -340,6 +383,9 @@ public:
 
             cout << "Do you want to sort another dataset? (y/n): ";
             cin >> continueOption;
+            // if (continueOption == 'y' || continueOption == 'Y') {
+            //     return;
+            // }
         }
 
         cout << "Thank you for using the sorting system! Goodbye!" << endl;
