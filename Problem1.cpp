@@ -119,6 +119,24 @@ public:
         }
         cout << "Guests have been sorted by name." << endl;
     }
+
+    void remove_guest(const string &guest_name) {
+        bool found = false;
+        for (int i = 0; i < guest_count; i++) {
+            if (guests_list[i].get_name() == guest_name) {
+                for (int j = i; j < guest_count - 1; j++) {
+                    guests_list[j] = guests_list[j + 1];
+                }
+                guest_count--;
+                found = true;
+                cout << "Guest " << guest_name << " removed successfully." << endl;
+                break;
+            }
+        }
+        if (!found) {
+            cout << "Guest " << guest_name << " not found!" << endl;
+        }
+    }
 };
 
 int main()
@@ -129,7 +147,7 @@ int main()
 
     do
     {
-        cout << "\n1. Add Guest\n2. Update Guest Invitation\n3. Display All Guests\n4. Send Reminder\n5. Sort Guests\n6. Exit\nEnter your choice : ";
+        cout << "\n1. Add Guest\n2. Update Guest Invitation\n3. Display All Guests\n4. Send Reminder\n5. Sort Guests\n6. Delete Guest\n7. Exit\nEnter your choice : ";
         cin >> choice;
 
         switch (choice)
@@ -165,8 +183,13 @@ int main()
         case 5:
             manager.sort_guest_list();
             break;
-
         case 6:
+            cout << "Enter guest name to remove: ";
+            cin >> name;
+            manager.remove_guest(name);
+            break;
+
+        case 7:
             cout << "Exiting the program..." << endl;
             break;
 
@@ -174,7 +197,7 @@ int main()
             cout << "Invalid choice! Please try again." << endl;
             break;
         }
-    } while (choice != 6);
+    } while (choice != 7);
 
     return 0;
 }
