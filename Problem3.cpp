@@ -21,7 +21,6 @@ public:
         head = NULL;
     }
 
-    // Insert an element in sorted order
     void insert(int n) {
         Node* newNode = new Node(n);
 
@@ -40,7 +39,6 @@ public:
         current->next = newNode;
     }
 
-    // Remove element at a given index
     void remove(int index) {
         if (head == NULL) return;
 
@@ -63,7 +61,6 @@ public:
         delete temp;
     }
 
-    // Get element at index
     int get(int index) {
         Node* current = head;
         for (int i = 0; i < index; i++) {
@@ -78,7 +75,6 @@ public:
         return current->data;
     }
 
-    // Destructor to free memory
     ~SortedLinkedList() {
         Node* current = head;
         while (current != NULL) {
@@ -88,7 +84,6 @@ public:
         }
     }
 
-    // Overloaded operator<< for output
     friend ostream& operator<<(ostream& os, const SortedLinkedList& list) {
         Node* current = list.head;
         os << "[";
@@ -102,38 +97,35 @@ public:
     }
 };
 
-// Test Cases
 int main() {
-    SortedLinkedList L;
+    SortedLinkedList myList;
 
-    // Insert elements
-    L.insert(5);
-    L.insert(8);
-    L.insert(7);
-    L.insert(6);
-    L.insert(6);
-    cout << "List after insertions: " << L << endl;  // Expected: [5, 6, 6, 7, 8]
+    myList.insert(5);
+    myList.insert(8);
+    myList.insert(7);
+    myList.insert(6);
+    myList.insert(6);
+    cout << "List after insertions: " << myList << endl;  // output: [5, 6, 6, 7, 8]
 
-    // Get element at index
-    cout << "Element at index 2: " << L.get(2) << endl;  // Expected: 6
+    cout << "Element at index 2: " << myList.get(2) << endl;  // output: 6
     try {
-        cout << L.get(10) << endl;  // Should throw exception
+        cout << myList.get(10) << endl;  // Should Error
     } catch (exception& e) {
         cout << "Exception: " << e.what() << endl;
     }
 
-    // Remove elements
-    L.remove(0);
-    cout << "After removing index 0: " << L << endl;  // Expected: [6, 6, 7, 8]
+
+    myList.remove(0);
+    cout << "After removing index 0: " << myList << endl;  // output: [6, 6, 7, 8]
     
-    L.remove(100);  // No change
-    cout << "After removing out-of-bounds index: " << L << endl;
+    myList.remove(100);  // no change
+    cout << "After removing out-of-bounds index: " << myList << endl;
 
-    L.remove(2);
-    cout << "After removing index 2: " << L << endl;  // Expected: [6, 6, 8]
+    myList.remove(2);
+    cout << "After removing index 2: " << myList << endl;  // output: [6, 6, 8]
 
-    L.remove(2);
-    cout << "After removing index 2 again: " << L << endl;  // Expected: [6, 6]
+    myList.remove(2);
+    cout << "After removing index 2 again: " << myList << endl;  // output: [6, 6]
 
     return 0;
 }
