@@ -80,7 +80,7 @@ public:
                     data[j] = data[j - interval];
                 }
                 data[j] = temp;
-                cout << "Iteration " << (i) << ": ";
+                cout << "Iteration " << (it++) << ": ";
                 displayData();
             }
         }
@@ -143,7 +143,7 @@ public:
     void countSort() {
 
         // Find the maximum element
-        T maxVal = data[0];
+        int maxVal = data[0];
         for (int i = 1; i < size; i++) {
             if (data[i] > maxVal) {
                 maxVal = data[i];
@@ -179,7 +179,7 @@ public:
     void radixSort() {
 
         // Find the maximum number to know number of digits
-        T max = data[0];
+        int max = data[0];
         for (int i = 1; i < size; i++) {
             if (data[i] > max) {
                 max = data[i];
@@ -189,7 +189,7 @@ public:
         // Do counting sort for every digit
         for (int exp = 1; max / exp > 0; exp *= 10) {
             // Create count array and output array
-            T *output = new T[size];
+            int *output = new int[size];
             int count[10] = {0};
 
             // Store count of occurrences in count[]
@@ -285,6 +285,7 @@ public:
             if (i < size - 1) cout << ", ";
         }
         cout << "]" << endl;
+
     }
 
 
@@ -397,9 +398,7 @@ public:
 
             cout << "Do you want to sort another dataset? (y/n): ";
             cin >> continueOption;
-            // if (continueOption == 'y' || continueOption == 'Y') {
-            //     return;
-            // }
+
         }
 
         cout << "Thank you for using the sorting system! Goodbye!" << endl;
@@ -407,16 +406,61 @@ public:
 };
 
 int main() {
+    string choice;
     int num;
-    cout << "Enter the number of items to sort: ";
-    cin >> num;
-    if (num <= 0) {
-        cout << "Invalid input! Exiting." << endl;
-        return 1;
+
+    while (true) {
+        cout << "Enter the data type: " << endl;
+        cout << "1. Integer" << endl;
+        cout << "2. Float" << endl;
+        cout << "3. String" << endl;
+        cout << "4. Exit" << endl;
+        cin >> choice;
+
+        // Clear input stream in case of invalid input
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (choice == "4") {
+            cout << "Exiting the program. Goodbye!" << endl;
+            break;
+        }
+
+        if (choice != "1" && choice != "2" && choice != "3") {
+            cout << "Invalid choice! Please try again." << endl;
+            continue;
+        }
+
+        cout << "Enter the number of items to sort: ";
+        cin >> num;
+
+        // Check for invalid input
+        if (cin.fail() || num <= 0) {
+            cout << "Invalid input! Please enter a positive integer." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        try {
+            if (choice == "1") {
+                SortingSystem<int> sorter(num);
+                sorter.showMenu();
+            }
+            // else if (choice == "2") {
+            //     SortingSystem<float> sorter(num);
+            //     sorter.showMenu();
+            // }
+            // else if (choice == "3") {
+            //     SortingSystem<string> sorter(num);
+            //     sorter.showMenu();
+            // }
+        }
+        catch (const exception& e) {
+            cout << "An error occurred: " << e.what() << endl;
+        }
     }
-
-    SortingSystem<int> sorter(num);
-    sorter.showMenu();
-
-    return 0;
 }

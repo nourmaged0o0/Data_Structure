@@ -125,12 +125,66 @@ public:
     }
 };
 int main() {
-    int size;
-    cout<<"Enter the number of elements:";
-    cin>>size;
-    StatisticalCalculation<int> statistics(size);
-    statistics.inputData();
-    statistics.statisticsMenu();
-    return 0;
+    string choice;
+    int num;
+
+    while (true) {
+        cout << "Enter the data type: " << endl;
+        cout << "1. Integer" << endl;
+        cout << "2. Float" << endl;
+        cout << "3. String" << endl;
+        cout << "4. Exit" << endl;
+        cin >> choice;
+
+        // Clear input stream in case of invalid input
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore();
+            continue;
+        }
+
+        if (choice == "4") {
+            cout << "Exiting the program. Goodbye!" << endl;
+            break;
+        }
+
+        if (choice != "1" && choice != "2" && choice != "3") {
+            cout << "Invalid choice! Please try again." << endl;
+            continue;
+        }
+
+        cout << "Enter the number of items to sort: ";
+        cin >> num;
+
+        // Check for invalid input
+        if (cin.fail() || num <= 0) {
+            cout << "Invalid input! Please enter a positive integer." << endl;
+            cin.clear();
+            cin.ignore();
+            continue;
+        }
+
+        try {
+            if (choice == "1") {
+                StatisticalCalculation<int> statistics(num);
+                statistics.inputData();
+                statistics.statisticsMenu();
+            }
+            // else if (choice == "2") {
+            //     SortingSystem<float> sorter(num);
+            //     sorter.showMenu();
+            // }
+            // else if (choice == "3") {
+            //     SortingSystem<string> sorter(num);
+            //     sorter.showMenu();
+            // }
+        }
+        catch (const exception& e) {
+            cout << "An error occurred: " << e.what() << endl;
+        }
+    }
 }
 
+    // StatisticalCalculation<int> statistics(size);
+    // statistics.inputData();
+    // statistics.statisticsMenu();
