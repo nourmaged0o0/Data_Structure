@@ -2,6 +2,9 @@
 #include <chrono>
 using namespace std;
 
+int it = 1;
+
+
 template<typename T>
 
 class SortingSystem {
@@ -96,6 +99,8 @@ public:
         }
         while (i < n1) data[k++] = L[i++];
         while (j < n2) data[k++] = R[j++];
+        cout << "Iteration " << it++ << ": ";
+        displayData();
         delete[] L;
         delete[] R;
     }
@@ -128,6 +133,8 @@ public:
 
         if (low < high) {
             int pi = partition(low, high);
+            cout << "Iteration " << it++ << ": ";
+            displayData();
             quickSort(low, pi - 1);
             quickSort(pi + 1, high);
         }
@@ -161,6 +168,8 @@ public:
             while (count[i] > 0) {
                 data[index++] = i;
                 count[i]--;
+                cout << "Iteration " << it++ << ": ";
+                displayData();
             }
         }
 
@@ -204,7 +213,8 @@ public:
             for (int i = 0; i < size; i++) {
                 data[i] = output[i];
             }
-
+            cout << "Iteration " << it++ << ": ";
+            displayData();
             delete[] output;
         }
     }
@@ -249,6 +259,8 @@ public:
                     k--;
                 }
                 buckets[i][k + 1] = temp;
+                cout << "Iteration " << it++ << ": ";
+                displayData();
             }
         }
 
@@ -260,6 +272,7 @@ public:
             }
             delete[] buckets[i];
         }
+
 
         delete[] buckets;
         delete[] bucket_sizes;
@@ -379,6 +392,7 @@ public:
 
             cout << "Sorted Data: ";
             displayData();
+            it=1;
             cout << "Sorting Time: " << fixed << sortTime << " seconds" << endl;
 
             cout << "Do you want to sort another dataset? (y/n): ";
